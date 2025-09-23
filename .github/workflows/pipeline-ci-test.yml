@@ -1,0 +1,82 @@
+name: Test Nextflow Pipeline
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - dev
+    paths-ignore:
+      - 'docs/**'
+      - 'README.md'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      DATA_VERSION: v0.1
+      S3_BASE_URL: https://delta-te-demo.s3.ap-southeast-1.amazonaws.com/public
+      DEMO_ARCHIVE: demo-v0.1.tar.zst
+      DEMO_SHA256:  demo-v0.1.tar.zst.sha256
+      REF_ARCHIVE:  demo-reference-v0.1.tar.zst
+      REF_SHA256:   demo-reference-v0.1.tar.zst.sha256
+
+    steps:
+      - run: df -h
+
+      - name: "Free up disk space"
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo docker image prune --all --force
+          sudo docker builder prune -a
+          sudo docker system prune -af || true
+          sudo apt-get clean || true
+
+      - run: df -h
+
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Download + verify archives
+        run: |
+          mkdir -p demo_cache
+
+          # --- Demo data archive ---
+          if [ ! -f "demo_cache/${DEMO_ARCHIVE}" ]; then
+            echo "Fetching ${DEMO_ARCHIVE}…"
+            curl -fsSL -o "demo_cache/${DEMO_ARCHIVE}" "${S3_BASE_URL}/${DEMO_ARCHIVE}"
+          else
+            echo "Found ${DEMO_ARCHIVE} in cache."
+          fi
+          curl -fsSL -o "demo_cache/${DEMO_SHA256}" "${S3_BASE_URL}/${DEMO_SHA256}"
+
+          # --- Reference archive ---
+          if [ ! -f "demo_cache/${REF_ARCHIVE}" ]; then
+            echo "Fetching ${REF_ARCHIVE}…"
+            curl -fsSL -o "demo_cache/${REF_ARCHIVE}" "${S3_BASE_URL}/${REF_ARCHIVE}"
+          else
+            echo "Found ${REF_ARCHIVE} in cache."
+          fi
+          curl -fsSL -o "demo_cache/${REF_SHA256}" "${S3_BASE_URL}/${REF_SHA256}"
+
+          echo "Verifying SHA256 checksums…"
+          (cd demo_cache && sha256sum -c "${DEMO_SHA256}" && sha256sum -c "${REF_SHA256}")
+
+      - name: Extract both bundles into test/demo/
+        run: |
+          zstd -dc --memory=2048MB "demo_cache/${DEMO_ARCHIVE}" | tar -xf - -C test/demo
+          zstd -dc --memory=2048MB "demo_cache/${REF_ARCHIVE}"  | tar -xf - -C test/demo
+
+          echo "Post-extract listing:"
+          find test/demo -maxdepth 2 -type f | sort | head -n 100
+
+      - name: Set up Nextflow
+        uses: nf-core/setup-nextflow@v1
+
+      - name: Run pipeline with test data
+        run: |
+          pwd
+          ls
+          ls test/demo
+          nextflow run main.nf -profile ci_demo -with-report results/report.html -with-timeline results/timeline.html -with-dag results/flowchart.png
