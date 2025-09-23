@@ -1,0 +1,6 @@
+.DS_Store
+.nextflow*
+results/
+work/
+test/demo/data
+test/demo/references
