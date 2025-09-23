@@ -1,0 +1,51 @@
+                   RIBO100K_BRAIN_REP1 RIBO100K_BRAIN_REP2 RIBO100K_BRAIN_REP3
+ENSG00000000419.10                  15                  13                  13
+ENSG00000000457.11                   2                   3                   3
+ENSG00000000938.10                   0                   0                   0
+ENSG00000001036.11                   0                   0                   0
+ENSG00000001461.14                  15                  17                  17
+ENSG00000001497.14                   2                   2                   0
+                   RIBO100K_ES_REP1 RIBO100K_ES_REP2 RIBO100K_ES_REP3
+ENSG00000000419.10               56               55               53
+ENSG00000000457.11                0                0                0
+ENSG00000000938.10                0                0                0
+ENSG00000001036.11                2                3                3
+ENSG00000001461.14                1                1                1
+ENSG00000001497.14               42               43               40
+                   RNA100K_BRAIN_REP1 RNA100K_BRAIN_REP2 RNA100K_BRAIN_REP3
+ENSG00000000419.10                  6                  4                  3
+ENSG00000000457.11                  1                  1                  1
+ENSG00000000938.10                 13                 12                 11
+ENSG00000001036.11                  1                  1                  1
+ENSG00000001461.14                  0                  0                  0
+ENSG00000001497.14                  8                  9                  8
+                   RNA100K_ES_REP1 RNA100K_ES_REP2 RNA100K_ES_REP3
+ENSG00000000419.10              46              47              48
+ENSG00000000457.11               7               7               6
+ENSG00000000938.10               2               2               2
+ENSG00000001036.11              10               9               7
+ENSG00000001461.14               0               0               1
+ENSG00000001497.14              86              86              86
+             SampleID Condition SeqType Batch
+1 RIBO100K_BRAIN_REP1         1    RIBO     0
+2 RIBO100K_BRAIN_REP2         1    RIBO     0
+3 RIBO100K_BRAIN_REP3         1    RIBO     0
+4    RIBO100K_ES_REP1         2    RIBO     0
+5    RIBO100K_ES_REP2         2    RIBO     0
+6    RIBO100K_ES_REP3         2    RIBO     0
+[1] "Intercept"              "Condition_2_vs_1"       "SeqType_RIBO_vs_RNA"   
+[4] "Condition2.SeqTypeRIBO"
+
+out of 11301 with nonzero total read count
+adjusted p-value < 0.1
+LFC > 0 (up)       : 1199, 11%
+LFC < 0 (down)     : 1312, 12%
+outliers [1]       : 0, 0%
+low counts [2]     : 2820, 25%
+(mean count < 2)
+[1] see 'cooksCutoff' argument of ?results
+[2] see 'independentFiltering' argument of ?results
+
+[1] 1912
+null device 
+          1 

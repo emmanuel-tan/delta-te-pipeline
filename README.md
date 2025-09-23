@@ -1,13 +1,14 @@
 # A Pipeline for Performing Translational Efficiency Analysis From RNA-seq and Ribo-seq samples
 
-> “End-to-end Ribo-seq + RNA-seq processing with contaminant removal, Salmon quant, tximeta/tximport gene counts, and deltaTE analysis.”
-
 ![main-diagram](assets/main-diagram.png)
 
 # Introduction
-To run translational efficiency analysis, various tools exist, but they are not often part of an integrated workflow specifically designed for this type of analysis. Pubicly available tools tend to exist standalone or may be part of a different pipeline. 
 
-In order to address that, I built a pipeline that takes raw RNA-seq and Ribo-seq reads and processes them adequately to run deltaTE.
+Translational efficiency (TE), the ratio between ribosome occupancy (Ribo-seq) and transcript abundance (RNA-seq), is a critical layer of gene regulation. Shifts in TE are implicated in diverse biological processes, from stress responses and developmental programs to diseases such as cancer, heart failure, and neurodegeneration. 
+
+Several tools exist for analyzing Ribo-seq and RNA-seq data together, but these are typically standalone R packages or scripts that require extensive preprocessing and custom formatting. 
+
+In contrast, this pipeline provides an integrated, containerized, and fully automated workflow that starts from raw sequencing reads and delivers ready-to-analyze TE results using deltaTE. By combining Nextflow, Docker, and CI-based testing with GitHub Actions, it emphasizes reproducibility, modularity, and accessibility.
 
 ## Features at a glance
 - **Dual-modality**: RIBO (SE) + RNA (PE)
@@ -28,7 +29,8 @@ In order to address that, I built a pipeline that takes raw RNA-seq and Ribo-seq
 4) Converts to Salmon transcript counts to gene-level counts (tximeta/tximport + custom tx2gene)
 5) Computes differentially translated genes with deltaTE
 6) Aggregates QC with MultiQC
-7) Stores all results in `./results`
+
+[Example output](./test/example-results/)
 
 # Ways to run
 ## Testing and Demo Run
@@ -62,15 +64,13 @@ nextflow run main.nf -profile ci_demo,arm
 
 **Automated demo run**
 
-As part of continuous integration set up, this repo will attempt a complete run of the pipeline using Github Actions when new pushes are made. It obtains demo data from an AWS S3 bucket containing three replicates of two samples for both RNA-seq and Ribo-seq data, with 1 million reads per sample. It runs quantification on a prebuilt Salmon index on a randomly sampled one-third of the human reference transcriptome due to size constraints.
+On each push, GitHub Actions executes a full run of the pipeline. The workflow pulls a compact, public demo dataset from S3 (2 conditions × 3 replicates for both RNA-seq and Ribo-seq; ~1M reads per sample). To keep CI runtimes reasonable, quantification uses a reduced Salmon index built from a one-third subset of the human transcriptome. 
 
-After completing the pipeline, the Github Actions workflow also publishes the reports on Github Pages which can be viewed [here](https://emmanuel-tan.github.io/delta-te-pipeline/).
+This exercises every stage—Trimmomatic → rRNA contaminant removal (Bowtie2) → Salmon → tximeta/tximport → deltaTE → MultiQC—on a small but representative dataset.
 
-This serves as part of a testing framework but also as a demo run of the pipeline. It takes about 20 minutes to complete this run on the free Github Actions Ubuntu runner, which has the following specifications [as stated by Github](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories). 
+After completing the pipeline, the Github Actions workflow publishes the reports which can be viewed [here](https://emmanuel-tan.github.io/delta-te-pipeline/).
 
-| Virtual Machine | Processor (CPU) | Memory (RAM) | Storage (SSD) | Architecture | Workflow label |
-| ----- | ----- | ----- | ----- | ----- | ----- |
-| Linux | 4 | 16 GB | 14 GB | x64 | ubuntu-latest, ubuntu-24.04, ubuntu-22.04 |
+This serves as part of a testing framework but also as a demo run of the pipeline. It takes about 20 minutes to complete this run on the free Github Actions Ubuntu runner, which has [these specifications as stated by Github](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories). 
 
 ## Standard run 
 
@@ -99,8 +99,7 @@ This includes
 - `results/deltaTE/` — gene tables/plots
 - `results/qc/` - per-sample QC and summarized MulitQC report (.html, .zip)
 
-
-# Troubleshooting / FAQ
+[Example deltaTE output](./test/example-results/deltaTE/output/Results/Result_figures.pdf)
 
 # Tools used
 
@@ -153,9 +152,12 @@ Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize a
 
 While this project is functional and complete in its current form, it is not yet deployment-ready. The following items outline future improvements and enhancements planned to bring it closer to production, research, or commercial standards:
 
+- [ ] Built-in sanity checks and validation (samplesheet schema, FASTQ integrity)
+- [ ] Support for running on HPCs or cloud executors
 - [ ] Improved parameter management and finetuning (ie. CPU and RAM usage, custom directory to save results)
 - [ ] Pre-checks to catch early formatting fails and pre-pulls of Docker images
-- [ ] Profiles for running on HPCs or cloud executors
+- [ ] Benchmarking across datasets (10M+ reads) with runtime/memory profiling
+- [ ] Automated and exapanded results rendering
 
 # Contact
 If you have any feedback, feel free to contact me at emmanueltan2000@gmail.com, or send me a DM on [Linkedin](https://www.linkedin.com/in/emmanuel-tan-0b89051b3/).

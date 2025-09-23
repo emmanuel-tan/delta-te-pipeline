@@ -89,7 +89,7 @@ jobs:
           nextflow run main.nf -profile ci_demo -with-report results/report.html -with-timeline results/timeline.html -with-dag results/flowchart.png
 
       - name: Prepare GitHub Pages content
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/main'
         run: |
           set -euo pipefail
           mkdir -p public
@@ -122,14 +122,12 @@ jobs:
             <a href="./flowchart.png">DAG / Flowchart</a>
           </nav>
           <hr>
-          <p><small>Commit: <code id="sha"></code></small></p>
-          <script>document.getElementById('sha').textContent=(new URLSearchParams(location.search)).get('sha')||'${GITHUB_SHA}';</script>
           HTML
 
           touch public/.nojekyll
 
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
