@@ -1,0 +1,7 @@
+sample_id,fastq_r1_path,fastq_r2_path
+RNA-1M-ES-REP1,test/demo/RNA-1M-ES/RNA-1M-ES-REP1-R1.fastq,test/demo/RNA-1M-ES/RNA-1M-ES-REP1-R2.fastq
+RNA-1M-ES-REP2,test/demo/RNA-1M-ES/RNA-1M-ES-REP2-R1.fastq,test/demo/RNA-1M-ES/RNA-1M-ES-REP2-R2.fastq
+RNA-1M-ES-REP3,test/demo/RNA-1M-ES/RNA-1M-ES-REP3-R1.fastq,test/demo/RNA-1M-ES/RNA-1M-ES-REP3-R2.fastq
+RNA-1M-BRAIN-REP1,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP1-R1.fastq,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP1-R2.fastq
+RNA-1M-BRAIN-REP2,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP2-R1.fastq,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP2-R2.fastq
+RNA-1M-BRAIN-REP3,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP3-R1.fastq,test/demo/RNA-1M-BRAIN/RNA-1M-BRAIN-REP3-R2.fastq
