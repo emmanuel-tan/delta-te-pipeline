@@ -25,8 +25,8 @@ In contrast, this pipeline provides an integrated, containerized, and fully auto
 ## Pipeline steps
 1) Takes in single-end RPF and paired-end RNA
 2) Removes contaminants (Bowtie2)
-3) Quantifies with Salmon (optionally reusing a prebuilt)
-4) Converts to Salmon transcript counts to gene-level counts (tximeta/tximport + custom tx2gene)
+3) Quantifies with Salmon (optionally reusing a pre-built index)
+4) Converts Salmon transcript counts to gene-level counts (tximeta/tximport + custom tx2gene)
 5) Computes differentially translated genes with deltaTE
 6) Aggregates QC with MultiQC
 
