@@ -2,7 +2,7 @@
 
 ![main-diagram](assets/main-diagram.png)
 
-[![CI](https://github.com/emmanuel-tan/delta-te-pipeline/actions/workflows/pipeline-ci-test.yml/badge.svg)](…) [![Report](https://img.shields.io/badge/Demo%20Reports-GitHub%20Pages-blue)](https://emmanuel-tan.github.io/delta-te-pipeline/)
+[![Test Nextflow Pipeline](https://github.com/emmanuel-tan/delta-te-pipeline/actions/workflows/pipeline-ci-test.yml/badge.svg)](https://github.com/emmanuel-tan/delta-te-pipeline/actions/workflows/pipeline-ci-test.yml) [![Report](https://img.shields.io/badge/Demo%20Reports-GitHub%20Pages-blue)](https://emmanuel-tan.github.io/delta-te-pipeline/)
 
 An automated Nextflow pipeline for translational efficiency (TE) analysis from RNA-seq + Ribo-seq.  
 It takes raw FASTQs → contaminant removal → quantification → deltaTE → MultiQC, producing reproducible gene-level TE tables and QC reports.
