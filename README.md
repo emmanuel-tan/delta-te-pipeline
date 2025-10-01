@@ -2,21 +2,38 @@
 
 ![main-diagram](assets/main-diagram.png)
 
+[![CI](https://github.com/emmanuel-tan/delta-te-pipeline/actions/workflows/pipeline-ci-test.yml/badge.svg)](…) [![Report](https://img.shields.io/badge/Demo%20Reports-GitHub%20Pages-blue)](https://emmanuel-tan.github.io/delta-te-pipeline/)
+
+An automated Nextflow pipeline for translational efficiency (TE) analysis from RNA-seq + Ribo-seq.  
+It takes raw FASTQs → contaminant removal → quantification → deltaTE → MultiQC, producing reproducible gene-level TE tables and QC reports.
+
 # Introduction
 
 Translational efficiency (TE), the ratio between ribosome occupancy (Ribo-seq) and transcript abundance (RNA-seq), is a critical layer of gene regulation. Shifts in TE are implicated in diverse biological processes, from stress responses and developmental programs to diseases such as cancer, heart failure, and neurodegeneration. 
 
 Several tools exist for analyzing Ribo-seq and RNA-seq data together, but these are typically standalone R packages or scripts that require extensive preprocessing and custom formatting. 
 
-In contrast, this pipeline provides an integrated, containerized, and fully automated workflow that starts from raw sequencing reads and delivers ready-to-analyze TE results using deltaTE. By combining Nextflow, Docker, and CI-based testing with GitHub Actions, it emphasizes reproducibility, modularity, and accessibility.
+In contrast, this pipeline provides an integrated, containerized, and fully automated workflow that starts from raw sequencing reads and delivers ready-to-analyze TE results using deltaTE. By combining Nextflow, Docker, and CI-based testing with GitHub Actions, it emphasizes reproducibility, modularity, and accessibility. 
 
-## Features at a glance
+## At a quick glance
+
+### Features
 - **Dual-modality**: RIBO (SE) + RNA (PE)
 - **Contaminant removal**: Bowtie2 against rRNA FASTA
 - **Fast quantification**: Salmon (pseudoalignment)
 - **Reusable indices**: **Skip index** build via `--salmon_index`
 - **Reproducible**: implemented using Docker containers
 - **Discoverable results**: gene counts, deltaTE gene tables, MultiQC reports
+
+### Implementation Highlights
+- **Custom Nextflow modules**: Existing nf-core/Nextflow modules were adapted to fit the pipeline’s specific requirements; new modules were written where none existed.
+- **Containerisation**: Pre-built Docker images were used whenever available for reproducibility. A custom Docker image was built for deltaTE to ensure consistent environments across runs.
+- **CI-driven testing**: Each commit triggers a full demo run on GitHub Actions with reports automatically published to GitHub Pages.
+
+
+### Demo Output and Generated Reports
+
+As part of the continuous integration setup using Github actions, the pipeline is run on a demo dataset. The results can be viewed [in this repo](./test/example-results/deltaTE/output/), and the resulting MultiQC HTML report and Nextflow reports (a main report as well as timeline) are automatically published to [Github Pages](https://emmanuel-tan.github.io/delta-te-pipeline/) after a successful run.
 
 # Workflow 
 
@@ -30,28 +47,50 @@ In contrast, this pipeline provides an integrated, containerized, and fully auto
 5) Computes differentially translated genes with deltaTE
 6) Aggregates QC with MultiQC
 
-[Example output](./test/example-results/)
-
 # Ways to run
-## Testing and Demo Run
+
+## Demo Run
 
 A demo run is completed automatically on this repo using Github Actions; the demo run can also be completed locally by pulling the repo, downloading the demo dataset, and running the pipeline using the profile `ci_demo`. 
 
+### Automated demo run
+
+On each push, GitHub Actions executes a full run of the pipeline. The workflow pulls a compact, public demo dataset from S3 (2 conditions × 3 replicates for both RNA-seq and Ribo-seq; ~1M reads per sample). To keep CI runtimes reasonable, quantification uses a reduced Salmon index built from a subset of the human transcriptome. 
+
+This exercises every stage—Trimmomatic → rRNA contaminant removal (Bowtie2) → Salmon → tximeta/tximport → deltaTE → MultiQC—on a small but representative dataset.
+
+After completing the pipeline, the Github Actions workflow publishes the reports which can be viewed [here](https://emmanuel-tan.github.io/delta-te-pipeline/).
+
+It takes ~20-30 minutes to complete this run on the free Github Actions Ubuntu runner, which has [these specifications as stated by Github](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories). 
+
+### Local demo run
+
+> **⚠️ Caveats for local demo runs**
+> 
+> - The demo dataset is ~8 GB and may take a long time to download and extract.
+> - Performance depends on your machine’s CPU architecture, RAM, and disk speed.
+> - The pipeline is developed for AMD64/x86-64 but will run on Apple M-series Macs via QEMU (with the `arm` profile). Expect significantly longer runtimes.
+> - On a 2020 M1 MacBook Air (8 GB RAM) the full demo takes several hours to complete.
+
 *Nextflow and Docker should already be installed on your device*
-
-**Download demo data and references from S3 bucket**
-```bash
-curl -fsSL -o "demo-v0.1.tar.zst" "https://delta-te-demo.s3.ap-southeast-1.amazonaws.com/public/demo-v0.1.tar.zst"
-curl -fsSL -o "demo-reference-v0.1.tar.zst" "https://delta-te-demo.s3.ap-southeast-1.amazonaws.com/public/demo-reference-v0.1.tar.zst"
-```
-
-The downloaded files should be unzipped and placed into the `test/demo` directory.
 
 **Pull the repo and change directory**
 
 ```bash
 git clone https://github.com/emmanuel-tan/delta-te-pipeline.git
 cd delta-te-pipeline
+```
+
+**Download demo data and references from S3 bucket**
+```bash
+# download the raw reads
+curl -o "demo-v0.1.tar.zst" "https://delta-te-demo.s3.ap-southeast-1.amazonaws.com/public/demo-v0.1.tar.zst" 
+# download the references
+curl -o "demo-reference-v0.1.tar.zst" "https://delta-te-demo.s3.ap-southeast-1.amazonaws.com/public/demo-reference-v0.1.tar.zst"
+
+# decompress and unzip to the expected path
+zstd -dc demo-v0.1.tar.zst | tar -xvf - -C test/new_demo
+zstd -dc demo-reference-v0.1.tar.zst | tar -xvf - -C test/new_demo
 ```
 
 **Run the pipeline with the `ci_demo` profile**
@@ -62,19 +101,9 @@ nextflow run main.nf -profile ci_demo
 nextflow run main.nf -profile ci_demo,arm
 ```
 
-**Automated demo run**
-
-On each push, GitHub Actions executes a full run of the pipeline. The workflow pulls a compact, public demo dataset from S3 (2 conditions × 3 replicates for both RNA-seq and Ribo-seq; ~1M reads per sample). To keep CI runtimes reasonable, quantification uses a reduced Salmon index built from a one-third subset of the human transcriptome. 
-
-This exercises every stage—Trimmomatic → rRNA contaminant removal (Bowtie2) → Salmon → tximeta/tximport → deltaTE → MultiQC—on a small but representative dataset.
-
-After completing the pipeline, the Github Actions workflow publishes the reports which can be viewed [here](https://emmanuel-tan.github.io/delta-te-pipeline/).
-
-This serves as part of a testing framework but also as a demo run of the pipeline. It takes about 20 minutes to complete this run on the free Github Actions Ubuntu runner, which has [these specifications as stated by Github](https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories). 
-
 ## Standard run 
 
-To run this on your own, the following parameters are expected. 
+To run this on your own data, the following parameters are expected. 
 
 | Parameter | Expected input |
 | --- | --- |
@@ -99,7 +128,7 @@ This includes
 - `results/deltaTE/` — gene tables/plots
 - `results/qc/` - per-sample QC and summarized MulitQC report (.html, .zip)
 
-[Example deltaTE output](./test/example-results/deltaTE/output/Results/Result_figures.pdf)
+[Example deltaTE results](./test/example-results/deltaTE/)
 
 # Tools used
 
@@ -153,6 +182,7 @@ Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize a
 While this project is functional and complete in its current form, it is not yet deployment-ready. The following items outline future improvements and enhancements planned to bring it closer to production, research, or commercial standards:
 
 - [ ] Built-in sanity checks and validation (samplesheet schema, FASTQ integrity)
+- [ ] Refined testing framework (smoke-test and result checks)
 - [ ] Support for running on HPCs or cloud executors
 - [ ] Improved parameter management and finetuning (ie. CPU and RAM usage, custom directory to save results)
 - [ ] Pre-checks to catch early formatting fails and pre-pulls of Docker images
