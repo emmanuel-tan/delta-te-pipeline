@@ -1,0 +1,7 @@
+sample_id,fastq_path
+RIBO-HELA-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517741/SRR14517741.fastq
+RIBO-HELA-R2,/home/emmanueltan2000/data/delta-te-run/SRR14517742/SRR14517742.fastq
+RIBO-HELA-R3,/home/emmanueltan2000/data/delta-te-run/SRR14517743/SRR14517743.fastq
+RIBO-RRNA-KO-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517738/SRR14517744.fastq
+RIBO-RRNA-KO-R2,/home/emmanueltan2000/data/delta-te-run/SRR14517738/SRR14517745.fastq
+RIBO-RRNA-KO-R3,/home/emmanueltan2000/data/delta-te-run/SRR14517738/SRR14517746.fastq
