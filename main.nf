@@ -52,8 +52,8 @@ workflow {
     save_unaligned_ch = Channel.value(true)
     sort_bam_ch       = Channel.value(false)
 
-    TRIMMOMATIC_RIBOSEQ(riboseq_ch)
     BOWTIE2_BUILD( rrna_ref_ch )
+    TRIMMOMATIC_RIBOSEQ(riboseq_ch)
 
     ch_bowtie2_index_val = BOWTIE2_BUILD.out.index
         .groupTuple()
