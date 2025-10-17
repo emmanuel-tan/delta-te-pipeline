@@ -82,23 +82,30 @@ workflow {
     //         tuple(meta, [ file(row.fastq_r1_path), file(row.fastq_r2_path) ])
     // }
 
+    if (params.rnaseq_samplesheet && file(params.rnaseq_samplesheet).exists()) {
     rnaseq_ch = Channel
         .fromPath(params.rnaseq_samplesheet)
         .splitCsv(header:true)
+        .filter { row -> row?.fastq_r1_path && row.fastq_r1_path.trim() }
         .map { row ->
-            def is_single_end = !row.fastq_r2_path || row.fastq_r2_path.trim() == ""
-            
+            def has_r2 = row.fastq_r2_path && row.fastq_r2_path.trim()
+            def is_single_end = !has_r2
+
             def meta = [
-                id: row.sample_id as String,
-                single_end: is_single_end
+                id         : row.sample_id as String,
+                single_end : is_single_end
             ]
-            
-            if (is_single_end) {
+
+            if (is_single_end)
                 tuple(meta, [ file(row.fastq_r1_path) ])
-            } else {
+            else
                 tuple(meta, [ file(row.fastq_r1_path), file(row.fastq_r2_path) ])
-            }
+        }
+    } else {
+        log.error "Samplesheet not found or not specified: ${params.rnaseq_samplesheet}"
+        System.exit(1)
     }
+
 
     TRIMMOMATIC_RNASEQ( rnaseq_ch )
 
