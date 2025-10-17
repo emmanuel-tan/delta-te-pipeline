@@ -1,0 +1,9 @@
+docker pull quay.io/biocontainers/trimmomatic:0.39--hdfd78af_2
+docker pull quay.io/biocontainers/fastqc:0.12.1--hdfd78af_0
+docker pull quay.io/biocontainers/fastqc:0.12.1--hdfd78af_0
+docker pull multiqc/multiqc:v1.30
+docker pull quay.io/biocontainers/salmon:1.10.3--h6dccd9a_2
+docker pull quay.io/biocontainers/salmon:1.10.3--h6dccd9a_2
+docker pull quay.io/biocontainers/salmon:1.10.3--h6dccd9a_2
+docker pull quay.io/biocontainers/bioconductor-tximeta:1.20.1--r43hdfd78af_0
+docker pull quay.io/biocontainers/python:3.10.4
