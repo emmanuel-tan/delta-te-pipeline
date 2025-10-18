@@ -73,6 +73,14 @@
         FASTQC_RIBO_TRIM    (   TRIMMOMATIC_RIBOSEQ.out.trimmed_reads   )
         FASTQC_RIBO_FILTER  (   BOWTIE2_REMOVE_CONTAMINANTS.out.fastq   )
 
+        rnaseq_ch = Channel
+            .fromPath(params.rnaseq_samplesheet)
+            .splitCsv(header:true)
+            .filter { row -> row?.fastq_path && row.fastq_path.trim() }
+            .map { row ->
+                def meta = [ id: row.sample_id as String, single_end: true ]
+                tuple(meta, [ file(row.fastq_path) ])
+        }
         // rnaseq_ch = Channel
         //     .fromPath(params.rnaseq_samplesheet)
         //     .splitCsv(header:true)
@@ -81,31 +89,6 @@
         //         def meta = [ id: row.sample_id as String, single_end: false ]
         //         tuple(meta, [ file(row.fastq_r1_path), file(row.fastq_r2_path) ])
         // }
-
-        if (params.rnaseq_samplesheet && file(params.rnaseq_samplesheet).exists()) {
-        rnaseq_ch = Channel
-            .fromPath(params.rnaseq_samplesheet)
-            .splitCsv(header:true)
-            .filter { row -> row?.fastq_r1_path && row.fastq_r1_path.trim() }
-            .map { row ->
-                def has_r2 = row.fastq_r2_path && row.fastq_r2_path.trim()
-                def is_single_end = !has_r2
-
-                def meta = [
-                    id         : row.sample_id as String,
-                    single_end : is_single_end
-                ]
-
-                if (is_single_end)
-                    tuple(meta, [ file(row.fastq_r1_path) ])
-                else
-                    tuple(meta, [ file(row.fastq_r1_path), file(row.fastq_r2_path) ])
-            }
-        } else {
-            log.error "Samplesheet not found or not specified: ${params.rnaseq_samplesheet}"
-            System.exit(1)
-        }
-
 
         TRIMMOMATIC_RNASEQ( rnaseq_ch )
 
