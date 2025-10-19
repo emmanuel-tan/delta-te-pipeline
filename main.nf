@@ -114,8 +114,8 @@
         gtf_val  = gtf_ch.first()
         txfa_val = tx_fa_ch.first()
 
-        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq
-        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads
+        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq.collect(flat: false)
+        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads.collect(flat: false)
 
         SALMON_QUANT_RIBO(
             rpf_reads,
