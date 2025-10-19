@@ -101,6 +101,9 @@
         alignment_mode_ch   = Channel.value(false)  
         libtype_ch          = Channel.value( 'A' )
 
+        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq.collect(flat: false)
+        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads.collect(flat: false)
+
         if (params.salmon_index) {
             idxPath = Channel.fromPath(params.salmon_index)
             idx_ch = Channel.fromPath(params.salmon_index).map { it -> it }   
@@ -113,9 +116,6 @@
 
         gtf_val  = gtf_ch.first()
         txfa_val = tx_fa_ch.first()
-
-        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq.collect(flat: false)
-        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads.collect(flat: false)
 
         SALMON_QUANT_RIBO(
             rpf_reads,
