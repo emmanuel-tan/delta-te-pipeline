@@ -101,8 +101,8 @@
         alignment_mode_ch   = Channel.value(false)  
         libtype_ch          = Channel.value( 'A' )
 
-        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq.collect(flat: false)
-        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads.collect(flat: false)
+        rpf_reads = BOWTIE2_REMOVE_CONTAMINANTS.out.fastq
+        rna_reads = TRIMMOMATIC_RNASEQ.out.trimmed_reads
 
         if (params.salmon_index) {
             idxPath = Channel.fromPath(params.salmon_index)
