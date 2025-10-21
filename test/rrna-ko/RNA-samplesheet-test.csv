@@ -1,3 +1,7 @@
 sample_id,fastq_path
 RNA-HELA-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517735/SRR14517735.fastq
+RNA-HELA-R2,/home/emmanueltan2000/data/delta-te-run/SRR14517736/SRR14517736.fastq
+RNA-HELA-R3,/home/emmanueltan2000/data/delta-te-run/SRR14517737/SRR14517737.fastq
 RNA-RRNA-KO-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517738/SRR14517738.fastq
+RNA-RRNA-KO-R2,/home/emmanueltan2000/data/delta-te-run/SRR14517739/SRR14517739.fastq
+RNA-RRNA-KO-R3,/home/emmanueltan2000/data/delta-te-run/SRR14517740/SRR14517740.fastq
