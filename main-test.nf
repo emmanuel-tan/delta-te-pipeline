@@ -52,6 +52,9 @@
         save_unaligned_ch = Channel.value(true)
         sort_bam_ch       = Channel.value(false)
 
+        SAMPLE_READS_RIBO ( riboseq_ch )
+        SAMPLE_READS_RNA ( rrna_ref_ch )
+
         BOWTIE2_BUILD( rrna_ref_ch )
         TRIMMOMATIC_RIBOSEQ(riboseq_ch)
 
