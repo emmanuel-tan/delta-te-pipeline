@@ -1,0 +1,3 @@
+sample_id,fastq_path
+RIBO-HELA-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517741/SRR14517741.fastq
+RIBO-RRNA-KO-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517744/SRR14517744.fastq

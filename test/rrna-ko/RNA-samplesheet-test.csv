@@ -1,0 +1,3 @@
+sample_id,fastq_path
+RNA-HELA-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517735/SRR14517735.fastq
+RNA-RRNA-KO-R1,/home/emmanueltan2000/data/delta-te-run/SRR14517738/SRR14517738.fastq
