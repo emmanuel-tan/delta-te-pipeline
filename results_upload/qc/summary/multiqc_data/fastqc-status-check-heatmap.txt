@@ -1,0 +1,11 @@
+.	Basic Statistics	Per Base Sequence Quality	Per Sequence Quality Scores	Per Base Sequence Content	Per Sequence GC Content	Per Base N Content	Sequence Length Distribution	Sequence Duplication Levels	Overrepresented Sequences	Adapter Content
+RIBO-HELA-R1.0-raw.fastq	1	1	1	0.25	0.25	1	1	0.25	0.25	0.25
+RIBO-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	1	1	1	0.25	0.5	1	0.5	0.25	0.25	1
+RIBO-HELA-R1.2-filtered.unmapped.fastq.gz	1	1	1	0.25	0.25	1	0.5	0.25	0.25	1
+RIBO-RRNA-KO-R1.0-raw.fastq	1	1	1	0.25	0.25	1	1	0.25	0.25	0.25
+RIBO-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	1	1	1	0.25	0.25	1	0.5	0.25	0.25	1
+RIBO-RRNA-KO-R1.2-filtered.unmapped.fastq.gz	1	1	1	0.25	0.25	1	0.5	0.25	0.5	1
+RNA-HELA-R1.0-raw.fastq	1	1	1	0.25	0.25	1	1	0.25	0.25	0.25
+RNA-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	1	1	1	0.25	1	1	0.5	0.25	0.25	0.5
+RNA-RRNA-KO-R1.0-raw.fastq	1	1	1	0.25	0.25	1	1	0.25	0.25	0.25
+RNA-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	1	1	1	0.25	0.25	1	0.5	0.25	0.25	0.25

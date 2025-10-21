@@ -1,0 +1,13 @@
+Module	Section	Sample Name	Source
+Bowtie 2 / HiSAT2	all_sections	RIBO-HELA-R1.bowtie2.log	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/15/RIBO-HELA-R1.bowtie2.log
+Bowtie 2 / HiSAT2	all_sections	RIBO-RRNA-KO-R1.bowtie2.log	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/24/RIBO-RRNA-KO-R1.bowtie2.log
+FastQC	all_sections	RIBO-HELA-R1.0-raw.fastq	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/7/RIBO-HELA-R1.0-raw_fastqc.zip
+FastQC	all_sections	RIBO-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/14/RIBO-HELA-R1.1-trimmed.SE.paired.trim_fastqc.zip
+FastQC	all_sections	RIBO-HELA-R1.2-filtered.unmapped.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/22/RIBO-HELA-R1.2-filtered.unmapped_fastqc.zip
+FastQC	all_sections	RIBO-RRNA-KO-R1.0-raw.fastq	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/8/RIBO-RRNA-KO-R1.0-raw_fastqc.zip
+FastQC	all_sections	RIBO-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/19/RIBO-RRNA-KO-R1.1-trimmed.SE.paired.trim_fastqc.zip
+FastQC	all_sections	RIBO-RRNA-KO-R1.2-filtered.unmapped.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/26/RIBO-RRNA-KO-R1.2-filtered.unmapped_fastqc.zip
+FastQC	all_sections	RNA-HELA-R1.0-raw.fastq	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/4/RNA-HELA-R1.0-raw_fastqc.zip
+FastQC	all_sections	RNA-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/20/RNA-HELA-R1.1-trimmed.SE.paired.trim_fastqc.zip
+FastQC	all_sections	RNA-RRNA-KO-R1.0-raw.fastq	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/1/RNA-RRNA-KO-R1.0-raw_fastqc.zip
+FastQC	all_sections	RNA-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	/home/emmanueltan2000/delta-te-pipeline/work/64/e01c41f699cb2a081f8cb1443d10ba/17/RNA-RRNA-KO-R1.1-trimmed.SE.paired.trim_fastqc.zip

@@ -1,0 +1,3 @@
+Sample	total_reads	unpaired_total	unpaired_aligned_none	unpaired_aligned_one	unpaired_aligned_multi	overall_alignment_rate
+RIBO-HELA-R1.bowtie2.log	29976156	29976156	13168162	16807994	0	56.07
+RIBO-RRNA-KO-R1.bowtie2.log	46854646	46854646	8156301	38698345	0	82.59

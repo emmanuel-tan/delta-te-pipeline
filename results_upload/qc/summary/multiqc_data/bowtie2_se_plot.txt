@@ -1,0 +1,3 @@
+Sample	SE mapped uniquely	SE not aligned
+RIBO-HELA-R1.bowtie2.log	16807994.0	13168162.0
+RIBO-RRNA-KO-R1.bowtie2.log	38698345.0	8156301.0

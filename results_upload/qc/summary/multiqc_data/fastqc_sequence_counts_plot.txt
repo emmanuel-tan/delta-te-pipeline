@@ -1,0 +1,11 @@
+Sample	Unique Reads	Duplicate Reads
+RIBO-HELA-R1.0-raw.fastq	5191006.0	46360188.0
+RIBO-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	4305170.0	25670986.0
+RIBO-HELA-R1.2-filtered.unmapped.fastq.gz	3675970.0	9492192.0
+RIBO-RRNA-KO-R1.0-raw.fastq	4134236.0	50229022.0
+RIBO-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	3484275.0	43370371.0
+RIBO-RRNA-KO-R1.2-filtered.unmapped.fastq.gz	2759399.0	5396902.0
+RNA-HELA-R1.0-raw.fastq	15923520.0	48506168.0
+RNA-HELA-R1.1-trimmed.SE.paired.trim.fastq.gz	15830619.0	40643149.0
+RNA-RRNA-KO-R1.0-raw.fastq	12951334.0	44284495.0
+RNA-RRNA-KO-R1.1-trimmed.SE.paired.trim.fastq.gz	12971973.0	41583074.0
