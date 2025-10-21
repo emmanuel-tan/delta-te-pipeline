@@ -30,7 +30,8 @@
     include { FORMAT_COUNT_MATRIX as FORMAT_RNA_COUNTS }        from './modules/local/formatting.nf'
     include { FORMAT_COUNT_MATRIX as FORMAT_RIBO_COUNTS }       from './modules/local/formatting.nf'
 
-    include { SAMPLE_FASTQ } from './modules/local/sample.nf'
+    include { SAMPLE_FASTQ as SAMPLE_FASTQ_RNA } from './modules/local/sample.nf'
+    include { SAMPLE_FASTQ as SAMPLE_FASTQ_RIBO} from './modules/local/sample.nf'
 
     include { DELTATE } from './modules/local/deltate.nf'
 
@@ -54,7 +55,7 @@
         save_unaligned_ch = Channel.value(true)
         sort_bam_ch       = Channel.value(false)
 
-        sampled_ribo_ch = SAMPLE_FASTQ(riboseq_ch) 
+        sampled_ribo_ch = SAMPLE_FASTQ_RIBO(riboseq_ch) 
 
         BOWTIE2_BUILD( rrna_ref_ch )
         TRIMMOMATIC_RIBOSEQ(sampled_ribo_ch)
@@ -86,7 +87,7 @@
                 tuple(meta, [ file(row.fastq_path) ])
         }
 
-        sampled_rna_ch = SAMPLE_FASTQ(rnaseq_ch)
+        sampled_rna_ch = SAMPLE_FASTQ_RNA(rnaseq_ch)
 
         // rnaseq_ch = Channel
         //     .fromPath(params.rnaseq_samplesheet)
