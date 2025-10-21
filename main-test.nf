@@ -30,6 +30,8 @@
     include { FORMAT_COUNT_MATRIX as FORMAT_RNA_COUNTS }        from './modules/local/formatting.nf'
     include { FORMAT_COUNT_MATRIX as FORMAT_RIBO_COUNTS }       from './modules/local/formatting.nf'
 
+    include { SAMPLE_FASTQ } from './modules/local/sample.nf'
+
     include { DELTATE } from './modules/local/deltate.nf'
 
     workflow {
