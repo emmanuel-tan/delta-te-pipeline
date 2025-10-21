@@ -36,6 +36,8 @@
     include { DELTATE } from './modules/local/deltate.nf'
 
     workflow {
+
+        file adapters = file(params.adapters)
         
         riboseq_ch = Channel
             .fromPath(params.riboseq_samplesheet)
@@ -59,7 +61,7 @@
 
         BOWTIE2_BUILD( rrna_ref_ch )
         // TRIMMOMATIC_RIBOSEQ(sampled_ribo_ch)
-        TRIMMOMATIC_RIBOSEQ(riboseq_ch)
+        TRIMMOMATIC_RIBOSEQ( riboseq_ch )
 
         ch_bowtie2_index_val = BOWTIE2_BUILD.out.index
             .groupTuple()
