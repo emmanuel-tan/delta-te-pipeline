@@ -52,11 +52,10 @@
         save_unaligned_ch = Channel.value(true)
         sort_bam_ch       = Channel.value(false)
 
-        SAMPLE_READS_RIBO ( riboseq_ch )
-        SAMPLE_READS_RNA ( rrna_ref_ch )
+        sampled_ribo_ch = SAMPLE_FASTQ(riboseq_ch) 
 
         BOWTIE2_BUILD( rrna_ref_ch )
-        TRIMMOMATIC_RIBOSEQ(riboseq_ch)
+        TRIMMOMATIC_RIBOSEQ(sampled_ribo_ch)
 
         ch_bowtie2_index_val = BOWTIE2_BUILD.out.index
             .groupTuple()
@@ -72,7 +71,7 @@
             sort_bam_ch
         )
 
-        FASTQC_RIBO_RAW     (   riboseq_ch  )
+        FASTQC_RIBO_RAW     (   sampled_ribo_ch  )
         FASTQC_RIBO_TRIM    (   TRIMMOMATIC_RIBOSEQ.out.trimmed_reads   )
         FASTQC_RIBO_FILTER  (   BOWTIE2_REMOVE_CONTAMINANTS.out.fastq   )
 
@@ -84,6 +83,9 @@
                 def meta = [ id: row.sample_id as String, single_end: true ]
                 tuple(meta, [ file(row.fastq_path) ])
         }
+
+        sampled_rna_ch = SAMPLE_FASTQ(rnaseq_ch)
+
         // rnaseq_ch = Channel
         //     .fromPath(params.rnaseq_samplesheet)
         //     .splitCsv(header:true)
@@ -93,9 +95,9 @@
         //         tuple(meta, [ file(row.fastq_r1_path), file(row.fastq_r2_path) ])
         // }
 
-        TRIMMOMATIC_RNASEQ( rnaseq_ch )
+        TRIMMOMATIC_RNASEQ( sampled_rna_ch )
 
-        FASTQC_RNA_RAW( rnaseq_ch )
+        FASTQC_RNA_RAW( sampled_rna_ch )
         FASTQC_RNA_TRIM( TRIMMOMATIC_RNASEQ.out.trimmed_reads )
 
         // tx_fa_ch            = Channel.fromPath(params.humanReferenceTx)            
