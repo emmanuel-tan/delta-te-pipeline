@@ -36,8 +36,6 @@
     include { DELTATE } from './modules/local/deltate.nf'
 
     workflow {
-
-        file adapters = file(params.adapters)
         
         riboseq_ch = Channel
             .fromPath(params.riboseq_samplesheet)
