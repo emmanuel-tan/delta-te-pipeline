@@ -1,0 +1,44 @@
+                   RIBO.HELA.R1 RIBO.HELA.R2 RIBO.HELA.R3 RIBO.RRNA.KO.R1
+ENSG00000000003.14          346          179          147             160
+ENSG00000000005.6             0            0            0               0
+ENSG00000000419.12          723          522          374             377
+ENSG00000000457.14          100           58           62              43
+ENSG00000000460.17          180           93          101              97
+ENSG00000000938.13            0            0            0               0
+                   RIBO.RRNA.KO.R2 RIBO.RRNA.KO.R3 RNA.HELA.R1 RNA.HELA.R2
+ENSG00000000003.14             184             176        1497        1380
+ENSG00000000005.6                0               0           0           0
+ENSG00000000419.12             401             437        1405        1380
+ENSG00000000457.14              41              48         239         256
+ENSG00000000460.17             113             151         617         574
+ENSG00000000938.13               0               0           0           0
+                   RNA.HELA.R3 RNA.RRNA.KO.R1 RNA.RRNA.KO.R2 RNA.RRNA.KO.R3
+ENSG00000000003.14        1592           1375           1546           1348
+ENSG00000000005.6            0              0              0              0
+ENSG00000000419.12        1603           1207           1418           1258
+ENSG00000000457.14         228            184            268            219
+ENSG00000000460.17         599            455            579            465
+ENSG00000000938.13           0              0              0              1
+         SampleID Condition SeqType Batch
+1    RIBO-HELA-R1         1    RIBO     0
+2    RIBO-HELA-R2         1    RIBO     0
+3    RIBO-HELA-R3         1    RIBO     0
+4 RIBO-RRNA-KO-R1         2    RIBO     0
+5 RIBO-RRNA-KO-R2         2    RIBO     0
+6 RIBO-RRNA-KO-R3         2    RIBO     0
+[1] "Intercept"              "Condition_2_vs_1"       "SeqType_RIBO_vs_RNA"   
+[4] "Condition2.SeqTypeRIBO"
+
+out of 17157 with nonzero total read count
+adjusted p-value < 0.1
+LFC > 0 (up)       : 205, 1.2%
+LFC < 0 (down)     : 166, 0.97%
+outliers [1]       : 17, 0.099%
+low counts [2]     : 4938, 29%
+(mean count < 7)
+[1] see 'cooksCutoff' argument of ?results
+[2] see 'independentFiltering' argument of ?results
+
+[1] 238
+null device 
+          1 
